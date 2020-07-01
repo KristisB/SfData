@@ -96,8 +96,6 @@ public class Main {
 
                 jsonArray.put(userJson);
             }
-//            JSONObject json = new JSONObject();
-//            json.put("userList", jsonArray);
 
             System.out.println(jsonArray.toString());
             return jsonArray.toString();
@@ -128,7 +126,6 @@ public class Main {
                     return "Unable to create new account";
                 }
             }
-
         });
 
         //saves users device token to DB
@@ -304,9 +301,26 @@ public class Main {
 
         Spark.post("/get_operation_log", (request, response) -> {
             int userId = Integer.parseInt(request.queryParams("userId"));
-            JSONArray jsonArray=db.getOperationLog(userId);
-            System.out.println("Log for user Id "+ userId+" "+jsonArray.toString());
+            JSONArray jsonArray = db.getOperationLog(userId);
+            System.out.println("Log for user Id " + userId + " " + jsonArray.toString());
             return jsonArray;
+        });
+
+        //todo send email with new password
+        Spark.post("/reset_password", (request, response) -> {
+            String email = request.queryParams("email");
+            String newPassword = request.queryParams("newPassword");
+            String encryptedPassword = request.queryParams("encryptedPassword");
+            User user = db.getUserData(email);
+            if (user == null) {
+                return "no user found with such e-mail";
+            } else {
+                user.setPassword(encryptedPassword);
+                db.saveUserData(user);
+                EmailHandler postman = new EmailHandler();
+                postman.sendEmail(email, newPassword);
+                return "password has been changed";
+            }
         });
 
     }

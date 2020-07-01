@@ -107,6 +107,36 @@ public class Database {
         }
         return null;
     }
+    public User getUserData(String email) {
+        String query = "SELECT * FROM users WHERE email=?";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                User user = new User();
+                user.setUserId(resultSet.getInt("id"));
+                user.setFirstName(resultSet.getString("first_name"));
+                user.setFamilyName(resultSet.getString("family_name"));
+                user.setEmail(resultSet.getString("email"));
+                user.setPassword(resultSet.getString("password"));
+                user.setPhone(resultSet.getString("phone"));
+                user.setRights(resultSet.getInt("rights"));
+                user.setCredits(resultSet.getInt("credits"));
+                user.setToken(resultSet.getString("token"));
+                return user;
+
+            } else {
+                System.out.println("no user");
+                return null;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public void makeReservation(int workoutId, int userId) {
         String query =
@@ -641,4 +671,6 @@ public class Database {
         }
         return jsonArray;
     }
+
+
 }
