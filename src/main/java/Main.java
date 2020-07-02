@@ -163,6 +163,34 @@ public class Main {
             return jsonArray.toString();
         });
 
+        // returns all workouts later or equal than given date + some extra data
+        Spark.post("/get_workouts_with_extra", (request, response) -> {
+            int userId = Integer.parseInt(request.queryParams("userId"));
+            String date = request.queryParams("date");
+            System.out.println("date " + date);
+            ArrayList<Workout> workoutsList = db.getWorkouts(date,userId);
+
+            JSONArray jsonArray = new JSONArray();
+            for (int i = 0; i < workoutsList.size(); i++) {
+                JSONObject workoutJson = new JSONObject();
+                workoutJson.put("workoutId", workoutsList.get(i).getWorkoutId());
+                workoutJson.put("dateTime", workoutsList.get(i).getDateTime());
+                workoutJson.put("duration", workoutsList.get(i).getDuration());
+                workoutJson.put("description", workoutsList.get(i).getDescription());
+                workoutJson.put("maxGroupSize", workoutsList.get(i).getMaxGroupSize());
+                workoutJson.put("freePlaces", workoutsList.get(i).getFreePlaces());
+                workoutJson.put("extraInfo1", workoutsList.get(i).getExtraInfo1());
+                workoutJson.put("extraInfo2", workoutsList.get(i).getExtraInfo2());
+
+                jsonArray.put(workoutJson);
+            }
+            JSONObject json = new JSONObject();
+            json.put("workoutsList", jsonArray);
+
+            System.out.println(jsonArray.toString());
+            return jsonArray.toString();
+        });
+
         //returns workouts of exact user
         Spark.post("/get_my_workouts", (request, response) -> {
 
@@ -306,7 +334,6 @@ public class Main {
             return jsonArray;
         });
 
-        //todo send email with new password
         Spark.post("/reset_password", (request, response) -> {
             String email = request.queryParams("email");
             String newPassword = request.queryParams("newPassword");

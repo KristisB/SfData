@@ -107,6 +107,7 @@ public class Database {
         }
         return null;
     }
+
     public User getUserData(String email) {
         String query = "SELECT * FROM users WHERE email=?";
         try (Connection connection = dataSource.getConnection();
@@ -258,6 +259,54 @@ public class Database {
 
         return workouts;
     }
+
+    public ArrayList<Workout> getWorkouts(String startDateTime, int userId) {
+        String query = "SELECT workout.*, id IN(SELECT workout.id FROM workout JOIN reservations on workout.id=reservations.workout_id" +
+                "                WHERE reservations.user_id=? " +
+                "                AND reservations.reservation_deleted=0 " +
+                "                AND workout.date_time>=?) AS reserved," +
+                "                id IN (SELECT workout.id FROM workout " +
+                "                JOIN waitlist ON waitlist.workout_id=workout.id " +
+                "                WHERE waitlist.user_id =? " +
+                "                AND waitlist.number_in_line>0 " +
+                "                AND workout.date_time>=?) AS inLine" +
+                "                FROM workout WHERE workout.date_time>?" +
+                "                ORDER BY date_time;";
+
+
+        System.out.println("db.getWorkouts with users data method initialized ");
+        ArrayList<Workout> workouts = new ArrayList<>();
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            long minDate = Long.parseLong(startDateTime);
+            statement.setInt(1, userId);
+            statement.setLong(2, minDate);
+            statement.setInt(3, userId);
+            statement.setLong(4, minDate);
+            statement.setLong(5, minDate);
+            ResultSet resultSet = statement.executeQuery();
+            System.out.println(statement.toString());
+
+            while (resultSet.next()) {
+                Workout workout = new Workout();
+                workout.setWorkoutId(resultSet.getInt("id"));
+                workout.setDateTime(resultSet.getLong("date_time"));
+                workout.setDuration(resultSet.getLong("duration"));
+                workout.setMaxGroupSize(resultSet.getInt("max_group_size"));
+                workout.setDescription(resultSet.getString("description"));
+                workout.setFreePlaces(resultSet.getInt("free_places"));
+                workout.setExtraInfo1(resultSet.getInt("reserved"));
+                workout.setExtraInfo2(resultSet.getInt("inLine"));
+                workouts.add(workout);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return workouts;
+    }
+
 
     public ArrayList<Workout> getMyWorkouts(int userId) {
 
@@ -651,12 +700,12 @@ public class Database {
         String query = "SELECT log.operation_date_time, log.balance_change,log.operation_info, log.reference_id, u.first_name, u.family_name  FROM " +
                 "balance_changes log JOIN users u ON log.reference_id=u.id " +
                 "WHERE log.user_id=? ORDER BY log.operation_date_time DESC";
-        JSONArray jsonArray= new JSONArray();
+        JSONArray jsonArray = new JSONArray();
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1,userId);
+            statement.setInt(1, userId);
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 JSONObject logJson = new JSONObject();
                 logJson.put("operationDateTime", resultSet.getLong("operation_date_time"));
                 logJson.put("balanceChange", resultSet.getInt("balance_change"));
