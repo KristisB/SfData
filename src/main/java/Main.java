@@ -16,8 +16,10 @@ public class Main {
 
 
     public static void main(String[] args) {
+        String dbLocal = "sfdata";
+        String dbHeroku = "heroku_17ddbc5da53f828";
 
-        Database db = new Database("sfdata");
+        Database db = new Database(dbHeroku);
         Thread reminderSending = new Thread(new ReminderThread());
         reminderSending.start();
 
@@ -186,8 +188,6 @@ public class Main {
             }
             JSONObject json = new JSONObject();
             json.put("workoutsList", jsonArray);
-
-            System.out.println(jsonArray.toString());
             return jsonArray.toString();
         });
 

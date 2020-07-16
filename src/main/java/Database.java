@@ -15,9 +15,15 @@ public class Database {
     public Database(String databaseName) {
         dataSource = new BasicDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUsername("root");
-        dataSource.setPassword("");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/" + databaseName + "?allowMultiQueries=true"); //"?useUnicode=yes&characterEncoding=UTF-8&amp;allowMultiQueries=true");
+//        dataSource.setUsername("root");
+//        dataSource.setPassword("");
+
+        dataSource.setUsername("b29641f9babf25");
+        dataSource.setPassword("651ac2d0");
+
+//        dataSource.setUrl("jdbc:mysql://localhost:3306/" + databaseName + "?allowMultiQueries=true"); //"?useUnicode=yes&characterEncoding=UTF-8&amp;allowMultiQueries=true");
+//        dataSource.setUrl("jdbc:mysql://eu-cdbr-west-03.cleardb.net/" + databaseName + "?reconnect=true"+"?allowMultiQueries=true"); //"?useUnicode=yes&characterEncoding=UTF-8&amp;allowMultiQueries=true");
+        dataSource.setUrl("jdbc:mysql://eu-cdbr-west-03.cleardb.net/heroku_17ddbc5da53f828?"+"allowMultiQueries=true");
         dataSource.setValidationQuery("SELECT 1");
     }
 
@@ -141,9 +147,9 @@ public class Database {
 
     public void makeReservation(int workoutId, int userId) {
         String query =
-                "INSERT INTO reservations(date, user_id, workout_id) VALUES(?,?,?);" +
-                        "UPDATE workout SET free_places=free_places-1 WHERE id=?;" +
-                        "UPDATE users SET credits=credits-1 WHERE id=?;";
+                "INSERT INTO reservations(date, user_id, workout_id) VALUES(?,?,?); " +
+                        "UPDATE workout SET free_places=free_places-1 WHERE id=?; " +
+                        "UPDATE users SET credits=credits-1 WHERE id=?; ";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
@@ -286,7 +292,7 @@ public class Database {
             statement.setLong(4, minDate);
             statement.setLong(5, minDate);
             ResultSet resultSet = statement.executeQuery();
-            System.out.println(statement.toString());
+//            System.out.println(statement.toString());
 
             while (resultSet.next()) {
                 Workout workout = new Workout();
