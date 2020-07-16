@@ -15,8 +15,8 @@ public class ReminderThread implements Runnable {
         while (true) {
             calendar.setTimeInMillis(System.currentTimeMillis());
             System.out.println("ReminderThread is running "+ calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE));
-            long startDateTime = System.currentTimeMillis() + 1 * 60 * 60 * 1000;   //reminder 1h before
-            long checkInterval = 1000 * 60 * 15;                                    //scan db every 15 min
+            long startDateTime = System.currentTimeMillis() + 1 * 60 * 60 * 1000;   //fix reminder to 1h before
+            long checkInterval = 1000 * 60 * 15 ;                                    //scan db every 15 min
             ArrayList<Workout> workouts = db.getWorkouts(startDateTime, startDateTime + checkInterval);
             for (Workout w : workouts) {
                 ArrayList<User> workoutParticipants = db.getWorkoutParticipants(w);
@@ -25,10 +25,10 @@ public class ReminderThread implements Runnable {
                     String msgBody="Waiting for you at "+ w.getTimeText()+"\n"+w.getDescription();
                     NotificationHandler notificationHandler = new NotificationHandler();
                     notificationHandler.sendNotification(new NotificationMessage(user.getToken(),
-                            new NotificationModel("reminder", "1 hour left"), new MessageData("", "")));
+                            new NotificationModel(msgTitle, msgBody), new MessageData("", "")));
                 }
                 calendar.setTimeInMillis(System.currentTimeMillis());
-                System.out.println("reminders sent to " + workoutParticipants.size() + "participants "+
+                System.out.println("reminders sent to " + workoutParticipants.size() + " participants "+
                         calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE)+":"+calendar.get(Calendar.SECOND));
             }
             try {

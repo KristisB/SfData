@@ -24,7 +24,6 @@ public class NotificationHandler {
                 .build();
 
         msgService = retrofitMsgService.create(MsgApiService.class);
-
         Call<ResponseBody> call = msgService.sendMessage(msg);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
