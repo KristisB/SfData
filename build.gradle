@@ -26,4 +26,6 @@ dependencies {
 
 // adding Java Mail API
     implementation 'javax.mail:mail:1.4.7'
+
+    compile "org.slf4j:slf4j-simple:1.6.1"
 }
