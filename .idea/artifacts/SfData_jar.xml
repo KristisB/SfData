@@ -14,6 +14,18 @@
       <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.mail/mail/1.4.7/9add058589d5d85adeb625859bf2c5eeaaedf12d/mail-1.4.7.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.servlet/javax.servlet-api/3.1.0/3cd63d075497751784b2fa84be59432f4905bf7c/javax.servlet-api-3.1.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-server/9.4.12.v20180830/b0f25df0d32a445fd07d5f16fff1411c16b888fa/jetty-server-9.4.12.v20180830.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/converter-gson/2.8.1/3dd6788fe5568b15df62735d7d16f09276989e9a/converter-gson-2.8.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/retrofit/2.8.1/1a5041a46b61256101c49751eced5e657082e7e/retrofit-2.8.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.activation/activation/1.1/e6cb541461c2834bdea3eb920f1884d1eb508b50/activation-1.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-client/9.4.12.v20180830/1d329d68f31dce13135243c06013aaf6f708f7e7/jetty-client-9.4.12.v20180830.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-http/9.4.12.v20180830/1341796dde4e16df69bca83f3e87688ba2e7d703/jetty-http-9.4.12.v20180830.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-io/9.4.12.v20180830/e93f5adaa35a9a6a85ba130f589c5305c6ecc9e3/jetty-io-9.4.12.v20180830.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-security/9.4.12.v20180830/299e0602a9c0b753ba232cc1c1dda72ddd9addcf/jetty-security-9.4.12.v20180830.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-servlet/9.4.12.v20180830/4c1149328eda9fa39a274262042420f66d9ffd5f/jetty-servlet-9.4.12.v20180830.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-util/9.4.12.v20180830/cb4ccec9bd1fe4b10a04a0fb25d7053c1050188a/jetty-util-9.4.12.v20180830.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-webapp/9.4.12.v20180830/a3e119df2da04fcf5aa290c8c35c5b310ce2dcd1/jetty-webapp-9.4.12.v20180830.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-xml/9.4.12.v20180830/e9f1874e9b5edd498f2fe7cd0904405da07cc300/jetty-xml-9.4.12.v20180830.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.json/json/20171018/36ced462c97f0845b4a7b266a25cebe95d18baa3/json-20171018.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>
