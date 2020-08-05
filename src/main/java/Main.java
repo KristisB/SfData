@@ -23,8 +23,9 @@ public class Main {
         Thread reminderSending = new Thread(new ReminderThread());
         reminderSending.start();
 
-
-        Spark.port(80);
+        int port = getHerokuAssignedPort();
+        System.out.println("port assigned "+ port);
+        Spark.port(port);
         System.out.println(db.printAll());
 
         Spark.get("/home", (request, response) -> getTextFromFile("home.html"));
@@ -351,6 +352,15 @@ public class Main {
         });
 
     }
+
+    private static int getHerokuAssignedPort() {
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        if (processBuilder.environment().get("PORT") != null) {
+            return Integer.parseInt(processBuilder.environment().get("PORT"));
+        }
+        return 80; //return default port if heroku-port isn't set (i.e. on localhost)
+    }
+
 
     private static String getTextFromFile(String path) {
         try {
