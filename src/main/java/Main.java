@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import database.Database;
 
 public class Main {
-    private MsgApiService msgService;
+    /*private MsgApiService msgService;
 
     public MsgApiService getMsgService() {
         return msgService;
@@ -39,7 +39,7 @@ public class Main {
 
         Spark.get("/home", (request, response) -> getTextFromFile("home.html"));
         Spark.get("/get_my_workouts", (request, response) -> getTextFromFile("get_array_list.html"));
-
+*/
 
 /*        Spark.post("/login", (request, response) -> {
             String email = request.queryParams("email");
@@ -365,7 +365,7 @@ public class Main {
             }
         });*/
 
-    }
+  /*  }
 
     private static int getHerokuAssignedPort() {
         ProcessBuilder processBuilder = new ProcessBuilder();
@@ -384,5 +384,5 @@ public class Main {
             e.printStackTrace();
         }
         return "Loading error";
-    }
+    }*/
 }
