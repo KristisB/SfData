@@ -9,9 +9,9 @@
 /.gradle/checksums/checksums.lock
 /.gradle/checksums/md5-checksums.bin
 /.gradle/checksums/sha1-checksums.bin
-/build/classes/java/main/Database.class
-/build/classes/java/main/EmailHandler$1.class
-/build/classes/java/main/EmailHandler.class
+/build/classes/java/main/database.Database.class
+/build/classes/java/main/Services.EmailHandler$1.class
+/build/classes/java/main/Services.EmailHandler.class
 /build/classes/java/main/Main.class
 /.gradle/6.1/executionHistory/executionHistory.bin
 /.gradle/6.1/executionHistory/executionHistory.bin
@@ -25,5 +25,5 @@
 /.gradle/checksums/checksums.lock
 /.gradle/checksums/md5-checksums.bin
 /.gradle/checksums/sha1-checksums.bin
-/build/classes/java/main/Database.class
+/build/classes/java/main/database.Database.class
 /build/classes/java/main/Main.class

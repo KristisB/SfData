@@ -1,3 +1,11 @@
+import Services.EmailHandler;
+import Services.MsgApiService;
+import Services.NotificationHandler;
+import Services.ReminderThread;
+import database.Database;
+import models.User;
+import models.WaitlistItem;
+import models.Workout;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import spark.Spark;
@@ -6,6 +14,7 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import database.Database;
 
 public class Main {
     private MsgApiService msgService;
@@ -32,7 +41,7 @@ public class Main {
         Spark.get("/get_my_workouts", (request, response) -> getTextFromFile("get_array_list.html"));
 
 
-        Spark.post("/login", (request, response) -> {
+/*        Spark.post("/login", (request, response) -> {
             String email = request.queryParams("email");
             String password = request.queryParams("password");
             System.out.println("Vardas: " + email + " slaptazodis " + password);
@@ -54,12 +63,12 @@ public class Main {
                 response.status(400);
                 return "unable to login";
             }
-        });
+        });*/
 
-        //return user data
+ /*       //return user data
         Spark.post("/get_user_data", (request, response) -> {
             int userId = Integer.parseInt(request.queryParams("userId"));
-            System.out.println("User ID: " + userId);
+            System.out.println("models.User ID: " + userId);
             User user = db.getUserData(userId);
             if (user != null) {
                 JSONObject json = new JSONObject();
@@ -74,13 +83,13 @@ public class Main {
                 System.out.println(json.toString());
                 return json.toString();
             } else {
-                System.out.println("no such user " + user.getUserId());
+                System.out.println("no such user " + userId);
                 response.status(400);
                 return "no such user";
             }
-        });
+        });*/
 
-        // returns all Users list
+        /*// returns all Users list
         Spark.post("/get_all_users", (request, response) -> {
 
             System.out.println("getAllUsers requested ");
@@ -103,8 +112,8 @@ public class Main {
             System.out.println(jsonArray.toString());
             return jsonArray.toString();
         });
-
-        //save user data or create new user if userId<=0
+*/
+/*        //save user data or create new user if userId<=0
         Spark.post("/save_user_data", (request, response) -> {
             User user = new User();
             user.setUserId(Integer.parseInt(request.queryParams("userId")));
@@ -117,9 +126,9 @@ public class Main {
             if (user.getUserId() > 0) {
                 if (db.saveUserData(user)) {
                     response.status(201);
-                    return "User data updated";
+                    return "models.User data updated";
                 } else {
-                    return "User data not updated";
+                    return "models.User data not updated";
                 }
             } else {
                 if (db.insertNewUser(user)) {
@@ -129,8 +138,9 @@ public class Main {
                     return "Unable to create new account";
                 }
             }
-        });
+        });*/
 
+/*
         //saves users device token to DB
         Spark.post("/save_token", (request, response) -> {
             int userId = Integer.parseInt(request.queryParams("userId"));
@@ -138,9 +148,10 @@ public class Main {
             db.saveToken(userId, token);
             return "token saved";
         });
+*/
 
 
-        // returns all workouts later or equal than given date
+/*        // returns all workouts later or equal than given date
         Spark.post("/get_workouts_on_day", (request, response) -> {
 
             String date = request.queryParams("date");
@@ -164,10 +175,12 @@ public class Main {
 
             System.out.println(jsonArray.toString());
             return jsonArray.toString();
-        });
+        });*/
 
+/*
         // returns all workouts later or equal than given date + some extra data
         Spark.post("/get_workouts_with_extra", (request, response) -> {
+//            System.out.println("request body: "+request.body());
             int userId = Integer.parseInt(request.queryParams("userId"));
             String date = request.queryParams("date");
             System.out.println("date " + date);
@@ -191,8 +204,9 @@ public class Main {
             json.put("workoutsList", jsonArray);
             return jsonArray.toString();
         });
+*/
 
-        //returns workouts of exact user
+/*        //returns workouts of exact user
         Spark.post("/get_my_workouts", (request, response) -> {
 
             int userId = Integer.parseInt(request.queryParams("userId"));
@@ -216,9 +230,9 @@ public class Main {
 
             System.out.println(jsonArray.toString());
             return jsonArray.toString();
-        });
+        });*/
 
-        //adds workout
+/*        //adds workout
         Spark.post("/add_workout", (request, response) -> {
             Workout workout = new Workout();
             workout.setDateTime(Long.parseLong(request.queryParams("date")));
@@ -227,9 +241,9 @@ public class Main {
             workout.setFreePlaces(workout.getMaxGroupSize());
             db.addWorkout(workout);
             return "Workout added";
-        });
+        });*/
 
-        //adds reservation
+ /*       //adds reservation
         Spark.post("/reserve", (request, response) -> {
             int workoutId = Integer.parseInt(request.queryParams("workoutId"));
             int userId = Integer.parseInt(request.queryParams("userId"));
@@ -250,9 +264,9 @@ public class Main {
                 response.status(201);
                 return "Reservation added";
             }
-        });
+        });*/
 
-        //cancels reservation
+/*        //cancels reservation
         Spark.post("/cancel_reservation", (request, response) -> {
             System.out.println("Cancel reservation initialized");
 
@@ -266,9 +280,9 @@ public class Main {
             notificationHandler.handleWaitlist(workoutId, db);
 
             return "Reservation canceled";
-        });
+        });*/
 
-        //returns waitlist of exact user
+ /*       //returns waitlist of exact user
         Spark.post("/get_my_waitlists", (request, response) -> {
 
             int userId = Integer.parseInt(request.queryParams("userId"));
@@ -291,25 +305,25 @@ public class Main {
 
             System.out.println(jsonArray.toString());
             return jsonArray.toString();
-        });
+        });*/
 
-        //adds to waitlist
+/*        //adds to waitlist
         Spark.post("/add_waitlist", (request, response) -> {
             int workoutId = Integer.parseInt(request.queryParams("workoutId"));
             int userId = Integer.parseInt(request.queryParams("userId"));
             db.addToWaitlist(workoutId, userId);
             return "Added to waitlist added";
-        });
+        });*/
 
-        //remove from waitlist
+/*        //remove from waitlist
         Spark.post("/quit_waitlist", (request, response) -> {
             System.out.println("quit waitlist started");
             int waitlistId = Integer.parseInt(request.queryParams("waitlistId"));
             db.quitWaitlist(waitlistId);
             return "Removed from waitlist";
-        });
+        });*/
 
-        //add credits to user account and returns new balance
+/*        //add credits to user account and returns new balance
         Spark.post("/add_credits", (request, response) -> {
             int userId = Integer.parseInt(request.queryParams("userId"));
             int addCredits = Integer.parseInt(request.queryParams("addCredits"));
@@ -319,23 +333,23 @@ public class Main {
             db.updateBalance(userId, newBalance);
             db.operationLog(userId, System.currentTimeMillis(), addCredits, referenceId, "Credits added");
             return newBalance;
-        });
+        });*/
 
-        Spark.post("/change_rights", (request, response) -> {
+  /*      Spark.post("/change_rights", (request, response) -> {
             int userId = Integer.parseInt(request.queryParams("userId"));
             int newRights = Integer.parseInt(request.queryParams("newRights"));
             db.updateRights(userId, newRights);
             return newRights;
-        });
+        });*/
 
-        Spark.post("/get_operation_log", (request, response) -> {
+ /*       Spark.post("/get_operation_log", (request, response) -> {
             int userId = Integer.parseInt(request.queryParams("userId"));
             JSONArray jsonArray = db.getOperationLog(userId);
             System.out.println("Log for user Id " + userId + " " + jsonArray.toString());
             return jsonArray;
-        });
+        });*/
 
-        Spark.post("/reset_password", (request, response) -> {
+        /*Spark.post("/reset_password", (request, response) -> {
             String email = request.queryParams("email");
             String newPassword = request.queryParams("newPassword");
             String encryptedPassword = request.queryParams("encryptedPassword");
@@ -349,7 +363,7 @@ public class Main {
                 postman.sendEmail(email, newPassword);
                 return "password has been changed";
             }
-        });
+        });*/
 
     }
 

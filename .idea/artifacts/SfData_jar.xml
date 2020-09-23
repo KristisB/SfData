@@ -26,7 +26,6 @@
       <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-webapp/9.4.12.v20180830/a3e119df2da04fcf5aa290c8c35c5b310ce2dcd1/jetty-webapp-9.4.12.v20180830.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-xml/9.4.12.v20180830/e9f1874e9b5edd498f2fe7cd0904405da07cc300/jetty-xml-9.4.12.v20180830.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.json/json/20171018/36ced462c97f0845b4a7b266a25cebe95d18baa3/json-20171018.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-simple/1.6.1/58e59bfb3e247097b8122243b3bfe0049c8cfae8/slf4j-simple-1.6.1.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>
