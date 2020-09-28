@@ -62,9 +62,9 @@ public class HttpService {
     //todo fix method to accept User data type
     @RequestMapping("/save_user_data")
     public @ResponseBody
-    String saveUserData(@RequestParam ("userId") int userId, @RequestParam("firstName") String firstName,
+    String saveUserData(@RequestParam("userId") int userId, @RequestParam("firstName") String firstName,
                         @RequestParam("familyName") String familyName, @RequestParam("email") String email,
-                        @RequestParam("password") String password, @RequestParam("phone") String phone)  {
+                        @RequestParam("password") String password, @RequestParam("phone") String phone) {
 
         User user = new User();
         user.setUserId(userId);
@@ -116,9 +116,10 @@ public class HttpService {
     //todo fix method to accept parameter of Workout data type
     //adds workout to database
     @RequestMapping("/add_workout")
-    public @ResponseBody String addWorkout(@RequestParam("date") long date,
-                           @RequestParam("maxGroupSize") int maxGroupSize,
-                           @RequestParam("description") String description) {
+    public @ResponseBody
+    String addWorkout(@RequestParam("date") long date,
+                      @RequestParam("maxGroupSize") int maxGroupSize,
+                      @RequestParam("description") String description) {
         Workout workout = new Workout();
         workout.setDateTime(date);
         workout.setMaxGroupSize(maxGroupSize);
@@ -133,8 +134,11 @@ public class HttpService {
     public @ResponseBody
     String reserve(@RequestParam("workoutId") int workoutId, @RequestParam("userId") int userId) {
         User user = db.getUserData(userId);
+        Workout workout = db.getWorkout(workoutId);
         if (user.getCredits() <= 0) {
             return "No credits";
+        } else if (workout.getFreePlaces() < 1) {
+            return "No free places";
         } else {
             db.makeReservation(workoutId, userId);
             db.operationLog(userId, System.currentTimeMillis(), -1, userId, "workout booked " + workoutId);
@@ -187,6 +191,29 @@ public class HttpService {
         return "Removed from waitlist";
     }
 
+    //remove from waitlist based on workoutId and userId
+    @RequestMapping("/quit_waitlist_by_workoutid_userid")
+    public @ResponseBody
+    String quitWatilist(@RequestParam("workoutId") int workoutId, @RequestParam("userId") int userId) {
+        ArrayList<WaitlistItem> myWaitlists = db.getMyWaitlist(userId);
+        WaitlistItem myWaitlist = new WaitlistItem();
+        if (myWaitlists != null) {
+            for (WaitlistItem waitlist : myWaitlists) {
+                if (waitlist.getWorkoutId() == workoutId) {
+                    myWaitlist = waitlist;
+                }
+            }
+        }
+        if (myWaitlist.getWaitlistId() > 0) {
+            db.quitWaitlist(myWaitlist.getWaitlistId());
+            return "Removed from waitlist";
+        } else {
+            return "waitlist item didnt found";
+        }
+
+    }
+
+
     //add credits to user account and returns new balance
     @RequestMapping("/add_credits")
     public @ResponseBody
@@ -202,27 +229,31 @@ public class HttpService {
 
     //save token
     @RequestMapping("/save_token")
-    public @ResponseBody String saveToken(@RequestParam("userId")int userId, @RequestParam("token") String token){
-        db.saveToken(userId,token);
+    public @ResponseBody
+    String saveToken(@RequestParam("userId") int userId, @RequestParam("token") String token) {
+        db.saveToken(userId, token);
         return "token saved";
     }
 
 
     @RequestMapping("/change_rights")
-    public @ResponseBody int changeRights(@RequestParam("userId") int userId, @RequestParam("newRights") int newRights){
+    public @ResponseBody
+    int changeRights(@RequestParam("userId") int userId, @RequestParam("newRights") int newRights) {
         db.updateRights(userId, newRights);
         return newRights;
     }
 
     @RequestMapping("/get_operation_log")
-    public @ResponseBody List<LogDataEntry> getLog(@RequestParam("userId") int userId){
+    public @ResponseBody
+    List<LogDataEntry> getLog(@RequestParam("userId") int userId) {
         return db.getOperationLog(userId);
     }
 
     @RequestMapping("/reset_password")
-    public @ResponseBody String resetPassword(@RequestParam("email")String email,
-                                              @RequestParam("newPassword")String newPassword,
-                                              @RequestParam("encryptedPassword") String encryptedPassword){
+    public @ResponseBody
+    String resetPassword(@RequestParam("email") String email,
+                         @RequestParam("newPassword") String newPassword,
+                         @RequestParam("encryptedPassword") String encryptedPassword) {
         User user = db.getUserData(email);
         if (user == null) {
             return "no user found with such e-mail";
@@ -235,7 +266,6 @@ public class HttpService {
         }
 
     }
-
 
 
     private String getTextFromFile(String path) {
